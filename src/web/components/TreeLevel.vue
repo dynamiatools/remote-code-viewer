@@ -1,6 +1,7 @@
 <script setup>
 import { goFile } from '../router.js';
 import FileIcon from './FileIcon.vue';
+import FolderIcon from './FolderIcon.vue';
 
 const props = defineProps({
   dirPath: { type: String, required: true },
@@ -26,8 +27,12 @@ function node() {
           :style="{ paddingLeft: `${8 + depth * 14}px` }"
           @click="toggle(childPath(dirPath, entry.name))"
         >
-          <span class="w-3 text-[var(--text-dim)]">{{ expanded.has(childPath(dirPath, entry.name)) ? '▾' : '▸' }}</span>
-          <span class="truncate">{{ entry.name }}/</span>
+          <span
+            class="w-3 text-[10px] transition-transform"
+            :class="{ 'rotate-90': expanded.has(childPath(dirPath, entry.name)) }"
+          >▸</span>
+          <FolderIcon :open="expanded.has(childPath(dirPath, entry.name))" />
+          <span class="truncate">{{ entry.name }}</span>
         </button>
         <TreeLevel
           v-if="expanded.has(childPath(dirPath, entry.name))"

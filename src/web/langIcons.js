@@ -1,48 +1,49 @@
 /**
- * Small colored monogram per highlight.js language id — no icon font, no SVG
- * set, zero added weight. Colors loosely follow the language associations
- * developers already recognise (GitHub's linguist palette) so the badge reads
- * at a glance instead of needing to be learned.
+ * Color + label per highlight.js language id, used by FileIcon.vue. Colors
+ * loosely follow the language associations developers already recognise
+ * (GitHub's linguist palette) so the tree reads at a glance. `name` is not
+ * rendered — it backs the icon's <title>/aria-label for hover and screen
+ * readers, since color alone isn't an accessible distinguisher.
  */
 const ICONS = {
-  javascript: { abbr: 'JS', color: '#d4b106' },
-  typescript: { abbr: 'TS', color: '#3178c6' },
-  xml: { abbr: '<>', color: '#e34c26' },
-  json: { abbr: '{}', color: '#a3a325' },
-  python: { abbr: 'PY', color: '#4b8bbe' },
-  ruby: { abbr: 'RB', color: '#a91e14' },
-  go: { abbr: 'GO', color: '#00acd7' },
-  rust: { abbr: 'RS', color: '#c76b3f' },
-  java: { abbr: 'JV', color: '#b07219' },
-  kotlin: { abbr: 'KT', color: '#a97bff' },
-  swift: { abbr: 'SW', color: '#f05138' },
-  c: { abbr: 'C', color: '#5a5a5a' },
-  cpp: { abbr: 'C+', color: '#f34b7d' },
-  csharp: { abbr: 'C#', color: '#178600' },
-  php: { abbr: 'PHP', color: '#6c78af' },
-  bash: { abbr: 'SH', color: '#5a9c53' },
-  powershell: { abbr: 'PS', color: '#4273ca' },
-  sql: { abbr: 'SQL', color: '#c9932e' },
-  css: { abbr: 'CSS', color: '#563d7c' },
-  scss: { abbr: 'SC', color: '#c6538c' },
-  less: { abbr: 'LS', color: '#1d5f8a' },
-  yaml: { abbr: 'YML', color: '#c33c3c' },
-  ini: { abbr: 'INI', color: '#6d8086' },
-  markdown: { abbr: 'MD', color: '#5a76b0' },
-  dockerfile: { abbr: 'DK', color: '#3c7ea1' },
-  makefile: { abbr: 'MK', color: '#6d6d6d' },
-  graphql: { abbr: 'GQL', color: '#d5399c' },
-  protobuf: { abbr: 'PB', color: '#4273ca' },
-  lua: { abbr: 'LUA', color: '#3455a4' },
-  dart: { abbr: 'DT', color: '#00b4ab' },
-  scala: { abbr: 'SC', color: '#c22d40' },
-  groovy: { abbr: 'GY', color: '#4298b8' },
-  perl: { abbr: 'PL', color: '#3178a8' },
-  r: { abbr: 'R', color: '#2266c4' },
-  diff: { abbr: '±', color: '#6d8086' },
+  javascript: { name: 'JavaScript', color: '#d4b106' },
+  typescript: { name: 'TypeScript', color: '#3178c6' },
+  xml: { name: 'Markup', color: '#e34c26' },
+  json: { name: 'JSON', color: '#a3a325' },
+  python: { name: 'Python', color: '#4b8bbe' },
+  ruby: { name: 'Ruby', color: '#a91e14' },
+  go: { name: 'Go', color: '#00acd7' },
+  rust: { name: 'Rust', color: '#c76b3f' },
+  java: { name: 'Java', color: '#b07219' },
+  kotlin: { name: 'Kotlin', color: '#a97bff' },
+  swift: { name: 'Swift', color: '#f05138' },
+  c: { name: 'C', color: '#5a5a5a' },
+  cpp: { name: 'C++', color: '#f34b7d' },
+  csharp: { name: 'C#', color: '#178600' },
+  php: { name: 'PHP', color: '#6c78af' },
+  bash: { name: 'Shell', color: '#5a9c53' },
+  powershell: { name: 'PowerShell', color: '#4273ca' },
+  sql: { name: 'SQL', color: '#c9932e' },
+  css: { name: 'CSS', color: '#563d7c' },
+  scss: { name: 'SCSS', color: '#c6538c' },
+  less: { name: 'Less', color: '#1d5f8a' },
+  yaml: { name: 'YAML', color: '#c33c3c' },
+  ini: { name: 'Config', color: '#6d8086' },
+  markdown: { name: 'Markdown', color: '#5a76b0' },
+  dockerfile: { name: 'Dockerfile', color: '#3c7ea1' },
+  makefile: { name: 'Makefile', color: '#6d6d6d' },
+  graphql: { name: 'GraphQL', color: '#d5399c' },
+  protobuf: { name: 'Protocol Buffers', color: '#4273ca' },
+  lua: { name: 'Lua', color: '#3455a4' },
+  dart: { name: 'Dart', color: '#00b4ab' },
+  scala: { name: 'Scala', color: '#c22d40' },
+  groovy: { name: 'Groovy', color: '#4298b8' },
+  perl: { name: 'Perl', color: '#3178a8' },
+  r: { name: 'R', color: '#2266c4' },
+  diff: { name: 'Diff', color: '#6d8086' },
 };
 
-const DEFAULT_ICON = { abbr: '·', color: '#8d8a80' };
+const DEFAULT_ICON = { name: 'Text', color: '#8d8a80' };
 
 export function iconFor(lang) {
   return ICONS[lang] ?? DEFAULT_ICON;
