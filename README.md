@@ -30,6 +30,32 @@ Just a fast window into the code an AI agent is currently working on.
 * 📜 **Last commits** — display recent commit history
 * 🔀 **Git diff** — inspect current working-tree changes
 
+## 🚀 How To Use
+
+No install step, no config file:
+
+```bash
+cd ~/dev/my-project
+npx @dynamia-tools/remote-code-viewer            # serves the current directory
+npx @dynamia-tools/remote-code-viewer /path      # serves an explicit workspace
+npx @dynamia-tools/remote-code-viewer --tunnel   # + a public HTTPS URL via Cloudflare
+```
+
+It prints a local URL — with a token baked in — that you open in a browser to start
+browsing the workspace. Add `--tunnel` when the browser isn't on the same machine or
+network as the server (the common case: the agent runs on a remote box, you're on
+your phone). Run `npx @dynamia-tools/remote-code-viewer --help` for the rest of the
+flags (port, host, token control, max file size).
+
+### Letting an agent launch it for you
+
+Because the whole premise is "the agent is remote, you are not," it's worth turning
+the command above into a skill/tool your AI agent can call on its own: have it run
+`remote-code-viewer --tunnel` in the environment it's already working in, read the
+tunnel URL that command prints to stdout, and hand that URL back to you in chat.
+That way you never SSH in or open a terminal on the remote box yourself — you just
+ask the agent to show you what it's doing and get a clickable link back.
+
 ## 🎯 Why?
 
 AI coding agents are increasingly running in remote development environments.
@@ -85,7 +111,7 @@ A typical environment looks like this:
 
 This makes it possible to work with an AI agent remotely without keeping a development machine running locally.
 
-## 🚀 Example
+## 💡 Example
 
 Start the viewer against a project:
 
