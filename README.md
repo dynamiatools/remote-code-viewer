@@ -1,5 +1,12 @@
 # Remote Code Viewer
 
+[![npm version](https://img.shields.io/npm/v/@dynamia-tools/remote-code-viewer.svg)](https://www.npmjs.com/package/@dynamia-tools/remote-code-viewer)
+[![npm downloads](https://img.shields.io/npm/dm/@dynamia-tools/remote-code-viewer.svg)](https://www.npmjs.com/package/@dynamia-tools/remote-code-viewer)
+[![Publish to npm](https://github.com/dynamiatools/remote-code-viewer/actions/workflows/publish.yml/badge.svg)](https://github.com/dynamiatools/remote-code-viewer/actions/workflows/publish.yml)
+[![node](https://img.shields.io/node/v/@dynamia-tools/remote-code-viewer.svg)](https://www.npmjs.com/package/@dynamia-tools/remote-code-viewer)
+[![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen.svg)](./package.json)
+[![license](https://img.shields.io/npm/l/@dynamia-tools/remote-code-viewer.svg)](./LICENSE)
+
 **Ultra-light, mobile-first remote code viewer with automatic Cloudflare Tunnel support, designed for AI agents working in remote development environments.**
 
 Remote Code Viewer provides a simple way to inspect a project running on a remote development server from any browser, including mobile devices.
@@ -520,3 +527,10 @@ Features should be evaluated carefully to avoid turning the project into a full 
 ## 📄 License
 
 MIT.
+
+## ☕ Support
+
+If Remote Code Viewer saves you from opening a full IDE just to peek at a remote
+workspace, consider buying the maintainer a coffee:
+
+<a href="https://www.buymeacoffee.com/marioserrano" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
