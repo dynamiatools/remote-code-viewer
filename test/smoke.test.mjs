@@ -17,6 +17,7 @@ before(async () => {
   await fs.writeFile(path.join(tmp, 'src', 'main.js'), 'function hello() {\n  return 1;\n}\n');
   await fs.writeFile(path.join(tmp, 'README.md'), '# hi\n');
   await fs.writeFile(path.join(tmp, '.env'), 'SECRET=1\n');
+  await fs.writeFile(path.join(tmp, 'emoji.txt'), '✨ sparkles 😀 grin\n');
 
   const config = await createConfig(parseArgs([tmp, '--port', '0']));
   server = createServer(config);
@@ -71,6 +72,13 @@ test('GET /api/file reads a file', async () => {
   assert.equal(status, 200);
   assert.equal(body.lang, 'javascript');
   assert.match(body.content, /function hello/);
+});
+
+test('GET /api/file preserves astral characters (emoji), not just valid ASCII', async () => {
+  const { status, body } = await api('/api/file?path=emoji.txt');
+  assert.equal(status, 200);
+  assert.match(body.content, /✨/);
+  assert.match(body.content, /😀/);
 });
 
 test('GET /api/file on a denied path is 404, identical to a missing one', async () => {

@@ -15,6 +15,17 @@ test('every EXT_TO_LANG id is a real highlight.js grammar', async () => {
   assert.deepEqual(invented, []);
 });
 
+test('the client-side grammar glob covers every EXT_TO_LANG id', async () => {
+  // src/web/highlight.js can't import EXT_TO_LANG and derive its
+  // import.meta.glob() pattern at runtime — Vite requires a literal glob
+  // array — so the list there is hand-written and must be kept a superset.
+  const source = await fs.readFile(new URL('../src/web/highlight.js', import.meta.url), 'utf8');
+  const globbed = new Set([...source.matchAll(/languages\/([\w-]+)\.js/g)].map((m) => m[1]));
+  const needed = [...new Set(Object.values(EXT_TO_LANG))].filter((id) => id !== 'plaintext');
+  const missing = needed.filter((id) => !globbed.has(id));
+  assert.deepEqual(missing, []);
+});
+
 test('every SYMBOL_RULES key is a language EXT_TO_LANG can produce', () => {
   const producible = new Set(Object.values(EXT_TO_LANG));
   const orphaned = Object.keys(SYMBOL_RULES).filter((lang) => !producible.has(lang));

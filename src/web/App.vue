@@ -25,24 +25,35 @@ watch(() => route.view, () => {
 </script>
 
 <template>
-  <div class="flex h-full flex-col">
-    <header class="flex items-center gap-3 border-b border-neutral-200 px-3 py-2 dark:border-neutral-800">
+  <div class="flex h-full flex-col bg-[var(--bg)] text-[var(--text)]">
+    <header class="flex items-center gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-3 py-2">
       <button
-        class="tap-target -ml-1 grid place-items-center rounded-lg text-lg md:hidden"
+        class="tap-target -ml-1 grid place-items-center rounded-lg text-lg text-[var(--text-dim)] md:hidden"
         aria-label="Toggle file tree"
         @click="drawerOpen = !drawerOpen"
       >☰</button>
       <div class="min-w-0 flex-1">
         <div class="truncate font-semibold">{{ meta?.workspace?.name ?? 'remote-code-viewer' }}</div>
-        <div v-if="meta?.git?.isRepo" class="truncate text-xs text-neutral-500">{{ meta.git.branch ?? 'detached' }}</div>
+        <div v-if="meta?.git?.isRepo" class="mt-0.5 inline-flex items-center gap-1 truncate rounded-full bg-[var(--color-accent)]/12 px-2 py-0.5 text-xs font-medium text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]">
+          <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+          {{ meta.git.branch ?? 'detached' }}
+        </div>
       </div>
       <nav class="hidden items-center gap-1 md:flex">
-        <button class="tap-target rounded-lg px-3 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900" @click="goSearch">Search</button>
-        <button class="tap-target rounded-lg px-3 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900" @click="goGit">Git</button>
+        <button
+          class="tap-target rounded-lg px-3 text-sm transition-colors hover:bg-[var(--surface-dim)]"
+          :class="route.view === 'search' ? 'text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]' : 'text-[var(--text-dim)]'"
+          @click="goSearch"
+        >Search</button>
+        <button
+          class="tap-target rounded-lg px-3 text-sm transition-colors hover:bg-[var(--surface-dim)]"
+          :class="route.view === 'git' ? 'text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]' : 'text-[var(--text-dim)]'"
+          @click="goGit"
+        >Git</button>
       </nav>
     </header>
 
-    <div v-if="metaError" class="p-4 text-sm text-red-600">{{ metaError }}</div>
+    <div v-if="metaError" class="p-4 text-sm text-[var(--color-del-dim)] dark:text-[var(--color-del)]">{{ metaError }}</div>
 
     <div v-else class="relative flex min-h-0 flex-1">
       <div
@@ -51,7 +62,7 @@ watch(() => route.view, () => {
         @click="drawerOpen = false"
       />
       <aside
-        class="absolute inset-y-0 left-0 z-30 w-72 -translate-x-full overflow-y-auto border-r border-neutral-200 bg-neutral-50 transition-transform duration-150 md:static md:z-0 md:w-64 md:translate-x-0 dark:border-neutral-800 dark:bg-neutral-950"
+        class="absolute inset-y-0 left-0 z-30 w-72 -translate-x-full overflow-y-auto border-r border-[var(--border)] bg-[var(--surface)] shadow-xl transition-transform duration-150 md:static md:z-0 md:w-64 md:translate-x-0 md:shadow-none"
         :class="{ 'translate-x-0': drawerOpen }"
       >
         <TreeView />
@@ -61,16 +72,28 @@ watch(() => route.view, () => {
         <FileView v-if="route.view === 'file'" :limits="meta?.limits" />
         <SearchView v-else-if="route.view === 'search'" />
         <GitView v-else-if="route.view === 'git'" />
-        <div v-else class="flex h-full items-center justify-center p-8 text-center text-neutral-400">
+        <div v-else class="flex h-full items-center justify-center p-8 text-center text-[var(--text-dim)]">
           <p>Pick a file from the tree.</p>
         </div>
       </main>
     </div>
 
-    <nav class="flex border-t border-neutral-200 md:hidden dark:border-neutral-800">
-      <button class="tap-target flex-1 py-2 text-sm" :class="{ 'font-semibold': route.view === 'tree' || route.view === 'file' }" @click="drawerOpen = true">Tree</button>
-      <button class="tap-target flex-1 py-2 text-sm" :class="{ 'font-semibold': route.view === 'search' }" @click="goSearch">Search</button>
-      <button class="tap-target flex-1 py-2 text-sm" :class="{ 'font-semibold': route.view === 'git' }" @click="goGit">Git</button>
+    <nav class="flex border-t border-[var(--border)] bg-[var(--surface)] md:hidden">
+      <button
+        class="tap-target flex-1 border-t-2 py-2 text-sm"
+        :class="route.view === 'tree' || route.view === 'file' ? 'border-[var(--color-accent)] font-semibold text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]' : 'border-transparent text-[var(--text-dim)]'"
+        @click="drawerOpen = true"
+      >Tree</button>
+      <button
+        class="tap-target flex-1 border-t-2 py-2 text-sm"
+        :class="route.view === 'search' ? 'border-[var(--color-accent)] font-semibold text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]' : 'border-transparent text-[var(--text-dim)]'"
+        @click="goSearch"
+      >Search</button>
+      <button
+        class="tap-target flex-1 border-t-2 py-2 text-sm"
+        :class="route.view === 'git' ? 'border-[var(--color-accent)] font-semibold text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]' : 'border-transparent text-[var(--text-dim)]'"
+        @click="goGit"
+      >Git</button>
     </nav>
   </div>
 </template>

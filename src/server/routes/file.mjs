@@ -57,7 +57,9 @@ export async function getFile(ctx, params) {
     return { ...base, lines: 0, binary: true, truncated: false, content: null };
   }
 
-  const content = buf.toString('utf8').replace(/[\uD800-\uDFFF]/g, '�');
+  // Only *unpaired* surrogates are replaced — a naive [\uD800-\uDFFF] sweep
+  // would mangle every valid astral character (emoji included).
+  const content = buf.toString('utf8').replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, '�');
   const lines = content.length === 0 ? 0 : content.split('\n').length;
 
   return { ...base, lines, binary: false, truncated, content };

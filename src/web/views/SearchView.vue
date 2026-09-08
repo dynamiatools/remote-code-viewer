@@ -40,37 +40,42 @@ watch([q, kind], () => {
 
 <template>
   <div class="flex h-full flex-col">
-    <div class="flex items-center gap-2 border-b border-neutral-200 p-3 dark:border-neutral-800">
+    <div class="flex items-center gap-2 border-b border-[var(--border)] p-3">
       <input
         v-model="q"
         type="search"
         placeholder="Search text or paths…"
-        class="tap-target min-w-0 flex-1 rounded-lg border border-neutral-300 bg-transparent px-3 text-sm dark:border-neutral-700"
+        class="tap-target min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm outline-none focus:border-[var(--color-accent)]"
         autofocus
       />
-      <select v-model="kind" class="tap-target rounded-lg border border-neutral-300 bg-transparent px-2 text-sm dark:border-neutral-700">
+      <select
+        v-model="kind"
+        class="tap-target rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2 text-sm outline-none focus:border-[var(--color-accent)]"
+      >
         <option value="text">Text</option>
         <option value="path">Path</option>
       </select>
     </div>
 
     <div class="min-h-0 flex-1 overflow-y-auto p-2 text-sm">
-      <p v-if="loading" class="p-2 text-neutral-400">searching…</p>
-      <p v-else-if="error" class="p-2 text-red-600">{{ error }}</p>
-      <p v-else-if="!results.length && q.trim().length >= 2" class="p-2 text-neutral-400">no results</p>
+      <p v-if="loading" class="p-2 text-[var(--text-dim)]">searching…</p>
+      <p v-else-if="error" class="p-2 text-[var(--color-del-dim)] dark:text-[var(--color-del)]">{{ error }}</p>
+      <p v-else-if="!results.length && q.trim().length >= 2" class="p-2 text-[var(--text-dim)]">no results</p>
 
       <template v-else>
-        <p v-if="engine" class="px-2 pb-1 text-xs text-neutral-400">
+        <p v-if="engine" class="px-2 pb-1 text-xs text-[var(--text-dim)]">
           engine: {{ engine }}<span v-if="truncated"> · truncated</span>
         </p>
         <button
           v-for="(r, i) in results"
           :key="i"
-          class="tap-target block w-full rounded px-2 py-1.5 text-left hover:bg-neutral-100 dark:hover:bg-neutral-900"
+          class="tap-target block w-full rounded px-2 py-1.5 text-left hover:bg-[var(--surface-dim)]"
           @click="goFile(r.path, r.line)"
         >
-          <div class="truncate font-mono text-xs text-neutral-500">{{ r.path }}<span v-if="r.line">:{{ r.line }}</span></div>
-          <div v-if="r.text !== undefined" class="truncate font-mono">{{ r.text }}</div>
+          <div class="truncate font-mono text-xs text-[var(--color-accent-dim)] dark:text-[var(--color-accent)]">
+            {{ r.path }}<span v-if="r.line" class="text-[var(--text-dim)]">:{{ r.line }}</span>
+          </div>
+          <div v-if="r.text !== undefined" class="truncate font-mono text-[var(--text)]">{{ r.text }}</div>
         </button>
       </template>
     </div>
