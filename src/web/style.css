@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+/*
+ * Token system: VS Code's own Dark+/Light+ palette, for the familiarity of a
+ * tool developers already read code in all day — the same blue accent, the
+ * same neutral grays, the same syntax colors. Diff add/remove reuse VS
+ * Code's git-decoration green/red rather than inventing new ones.
+ */
+@theme {
+  --color-accent: #007acc;
+  --color-accent-dim: #005a9e;
+  --color-add: #81b88b;
+  --color-add-dim: #587c0c;
+  --color-del: #f14c4c;
+  --color-del-dim: #ad0707;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --surface: #f3f3f3;
+  --surface-dim: #ececec;
+  --border: #e0e0e0;
+  --text: #1e1e1e;
+  --text-dim: #6e6e6e;
+  --text-convention: #267f74;
+
+  --hljs-fg: #1e1e1e;
+  --hljs-comment: #008000;
+  --hljs-keyword: #0000ff;
+  --hljs-string: #a31515;
+  --hljs-number: #098658;
+  --hljs-function: #795e26;
+  --hljs-attr: #001080;
+  --hljs-tag: #800000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1e1e;
+    --surface: #252526;
+    --surface-dim: #2d2d2d;
+    --border: #3c3c3c;
+    --text: #d4d4d4;
+    --text-dim: #8a8a8a;
+    --text-convention: #4ec9b0;
+
+    --hljs-fg: #d4d4d4;
+    --hljs-comment: #6a9955;
+    --hljs-keyword: #569cd6;
+    --hljs-string: #ce9178;
+    --hljs-number: #b5cea8;
+    --hljs-function: #dcdcaa;
+    --hljs-attr: #9cdcfe;
+    --hljs-tag: #569cd6;
+  }
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tap-target {
+  @apply min-h-11 min-w-11;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+
+/* ---------- code viewer ---------- */
+
+pre.code-block {
+  @apply text-[13px] leading-5 whitespace-pre;
+  font-family: var(--font-mono);
+  tab-size: 2;
+  color: var(--hljs-fg);
+}
+
+.hljs {
+  background: transparent;
+}
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-link, .hljs-name {
+  color: var(--hljs-keyword);
+  font-weight: 600;
+}
+.hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition,
+.hljs-title.class_, .hljs-title.class_.inherited__ {
+  color: var(--hljs-string);
+}
+.hljs-comment, .hljs-quote {
+  color: var(--hljs-comment);
+  font-style: italic;
+}
+.hljs-number, .hljs-meta {
+  color: var(--hljs-number);
+}
+.hljs-title.function_, .hljs-title.function_.invoke__, .hljs-built_in, .hljs-type {
+  color: var(--hljs-function);
+}
+.hljs-attr, .hljs-attribute, .hljs-variable, .hljs-template-variable, .hljs-params {
+  color: var(--hljs-attr);
+}
+.hljs-tag, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion {
+  color: var(--hljs-tag);
+}
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+
+/* ---------- markdown ---------- */
+
+.markdown-body {
+  @apply max-w-none;
+  color: var(--text);
+  line-height: 1.65;
+}
+.markdown-body > * + * {
+  margin-top: 0.9em;
+}
+.markdown-body h1, .markdown-body h2, .markdown-body h3,
+.markdown-body h4, .markdown-body h5, .markdown-body h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.6em;
+}
+.markdown-body h1 { @apply text-2xl; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+.markdown-body h2 { @apply text-xl; border-bottom: 1px solid var(--border); padding-bottom: 0.25em; }
+.markdown-body h3 { @apply text-lg; }
+.markdown-body h4 { @apply text-base; }
+.markdown-body p { margin-top: 0.9em; }
+.markdown-body a { color: var(--color-accent-dim); text-decoration: underline; text-underline-offset: 2px; }
+@media (prefers-color-scheme: dark) {
+  .markdown-body a { color: var(--color-accent); }
+}
+.markdown-body strong { font-weight: 700; }
+.markdown-body ul, .markdown-body ol {
+  padding-left: 1.4em;
+}
+.markdown-body ul { list-style: disc; }
+.markdown-body ol { list-style: decimal; }
+.markdown-body li + li { margin-top: 0.25em; }
+.markdown-body blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1em;
+  color: var(--text-dim);
+}
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5em 0;
+}
+.markdown-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--surface-dim);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.markdown-body pre {
+  background: var(--surface-dim);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75em 1em;
+  overflow-x: auto;
+}
+.markdown-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+.markdown-body th, .markdown-body td {
+  border: 1px solid var(--border);
+  padding: 0.4em 0.7em;
+  text-align: left;
+}
+.markdown-body th {
+  background: var(--surface-dim);
+  font-weight: 600;
+}
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+/* ---------- diff ---------- */
+
+.diff-line {
+  @apply block px-2;
+  font-family: var(--font-mono);
+  white-space: pre;
+}
+.diff-line--add { color: var(--color-add-dim); background: color-mix(in srgb, var(--color-add) 12%, transparent); }
+.diff-line--del { color: var(--color-del-dim); background: color-mix(in srgb, var(--color-del) 12%, transparent); }
+.diff-line--hunk { color: var(--color-accent-dim); font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  .diff-line--add { color: var(--color-add); }
+  .diff-line--del { color: var(--color-del); }
+  .diff-line--hunk { color: var(--color-accent); }
+}

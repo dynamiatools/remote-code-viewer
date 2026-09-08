@@ -1,0 +1,49 @@
+name: Publish to npm
+
+# Runs the whole test+build gate again on CI before anything ships — a green
+# local run is not proof, only a signal. Only a published GitHub Release
+# triggers a publish — no manual/workflow_dispatch escape hatch.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # for npm provenance
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+
+      # Catches "tagged v1.2.3 but forgot to bump package.json" before it
+      # becomes a mispublished version on the registry (versions there are
+      # immutable).
+      - name: Verify release tag matches package.json version
+        run: |
+          pkg_version="v$(node -p "require('./package.json').version")"
+          if [ "$pkg_version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::release tag $GITHUB_REF_NAME does not match package.json version $pkg_version"
+            exit 1
+          fi
+
+      - run: npm test
+
+      # prepublishOnly also runs this, but running it explicitly here keeps
+      # the build failure visible as its own CI step rather than buried
+      # inside `npm publish`'s output.
+      - run: npm run build
+
+      - run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
