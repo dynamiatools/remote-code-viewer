@@ -25,6 +25,7 @@
   --border: #e0e0e0;
   --text: #1e1e1e;
   --text-dim: #6e6e6e;
+  --text-convention: #267f74;
 
   --hljs-fg: #1e1e1e;
   --hljs-comment: #008000;
@@ -44,6 +45,7 @@
     --border: #3c3c3c;
     --text: #d4d4d4;
     --text-dim: #8a8a8a;
+    --text-convention: #4ec9b0;
 
     --hljs-fg: #d4d4d4;
     --hljs-comment: #6a9955;

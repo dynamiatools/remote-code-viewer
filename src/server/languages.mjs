@@ -61,6 +61,31 @@ export function detectLang(filename) {
 }
 
 /**
+ * Raster formats the client can render straight from a base64 data: URI
+ * (CSP already allows `img-src ... data:`), so no extra route or write
+ * syscall is needed. SVG is deliberately excluded — it stays text, shown
+ * as highlighted markup, which is both more useful and avoids embedding
+ * user-controlled markup as image bytes.
+ */
+const EXT_TO_IMAGE_MIME = {
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  gif: 'image/gif',
+  webp: 'image/webp',
+  bmp: 'image/bmp',
+  ico: 'image/x-icon',
+  avif: 'image/avif',
+};
+
+export function detectImageMime(filename) {
+  const dot = filename.lastIndexOf('.');
+  if (dot === -1) return null;
+  const ext = filename.slice(dot + 1).toLowerCase();
+  return EXT_TO_IMAGE_MIME[ext] ?? null;
+}
+
+/**
  * Heuristic symbol outline, per language (ADR-0005). Not a parser: a table of
  * contents, not a language server. Each entry is `{ kind, regex }`; `regex`
  * must capture the symbol name in group 1 and be applied per line.

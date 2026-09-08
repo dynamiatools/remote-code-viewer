@@ -62,7 +62,7 @@ watch(() => route.view, () => {
         @click="drawerOpen = false"
       />
       <aside
-        class="absolute inset-y-0 left-0 z-30 w-72 -translate-x-full overflow-y-auto border-r border-[var(--border)] bg-[var(--surface)] shadow-xl transition-transform duration-150 md:static md:z-0 md:w-64 md:translate-x-0 md:shadow-none"
+        class="absolute inset-y-0 left-0 z-30 w-72 -translate-x-full overflow-auto border-r border-[var(--border)] bg-[var(--surface)] shadow-xl transition-transform duration-150 md:static md:z-0 md:w-64 md:translate-x-0 md:shadow-none"
         :class="{ 'translate-x-0': drawerOpen }"
       >
         <TreeView />

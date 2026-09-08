@@ -51,5 +51,30 @@ export async function getTree(ctx, params) {
   }
 
   entries.sort(collator);
+
+  if (entries.length > 0 && (await ctx.git.isRepo(ctx.root, ctx.config.limits))) {
+    await markIgnored(ctx, rel, entries);
+  }
+
   return { path: rel, entries, truncated };
+}
+
+/**
+ * Dims gitignored entries in the tree (context, not a filter — §"Git
+ * answers exactly three questions"). `check-ignore` prints back only the
+ * paths it matches, one per line, so absence from stdout means "tracked or
+ * unknown", never an error worth surfacing.
+ */
+async function markIgnored(ctx, rel, entries) {
+  const relPaths = entries.map((entry) => (rel ? `${rel}/${entry.name}` : entry.name));
+  const result = await ctx.git.run(ctx.root, ['check-ignore', '--', ...relPaths], {
+    maxOutputBytes: ctx.config.limits.maxGitOutput,
+    timeoutMs: ctx.config.limits.maxGitMs,
+  });
+  if (!result.stdout) return;
+
+  const ignored = new Set(result.stdout.split('\n').filter(Boolean));
+  for (let i = 0; i < entries.length; i++) {
+    if (ignored.has(relPaths[i])) entries[i].ignored = true;
+  }
 }

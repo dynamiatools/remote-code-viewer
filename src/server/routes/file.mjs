@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { resolveInWorkspace } from '../workspace.mjs';
-import { detectLang } from '../languages.mjs';
+import { detectLang, detectImageMime } from '../languages.mjs';
 import { badRequest, notFound, tooLarge } from '../errors.mjs';
 
 function looksBinary(buf) {
@@ -51,6 +51,14 @@ export async function getFile(ctx, params) {
   }
 
   const { buf, truncated } = await readBounded(abs, ctx.config.limits.maxFileSize);
+
+  // Below maxFileSize already (checked above), so `buf` holds the whole
+  // file — safe to embed whole as a data: URI, never a partial image.
+  const imageMime = detectImageMime(name);
+  if (imageMime) {
+    return { ...base, lines: 0, binary: true, image: true, mime: imageMime, truncated: false, content: buf.toString('base64') };
+  }
+
   const sniff = buf.subarray(0, ctx.config.limits.binarySniffBytes);
 
   if (looksBinary(sniff)) {

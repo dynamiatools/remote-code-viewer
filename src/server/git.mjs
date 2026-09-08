@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
  */
 const ALLOWED_SUBCOMMANDS = new Set([
   'rev-parse', 'symbolic-ref', 'log', 'status', 'diff', 'show', 'ls-files',
-  'grep', 'for-each-ref', 'describe',
+  'grep', 'for-each-ref', 'describe', 'check-ignore',
 ]);
 
 const SCRUBBED_ENV = () => ({

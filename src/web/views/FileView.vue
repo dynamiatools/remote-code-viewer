@@ -48,6 +48,7 @@ function scrollToLine() {
 }
 
 const markdownHtml = computed(() => (file.value?.lang === 'markdown' && file.value.content ? renderMarkdown(file.value.content) : ''));
+const imageDataUrl = computed(() => (file.value?.image ? `data:${file.value.mime};base64,${file.value.content}` : ''));
 
 watch(() => route.path, load, { immediate: true });
 watch(() => route.line, () => nextTick(scrollToLine));
@@ -80,6 +81,9 @@ watch(() => route.line, () => nextTick(scrollToLine));
       <p v-else-if="error" class="p-4 text-[var(--color-del-dim)] dark:text-[var(--color-del)]">{{ error }}</p>
       <div v-else-if="tooLarge" class="p-4 text-[var(--text-dim)]">
         File too large to display ({{ tooLarge.size }} bytes, limit {{ limits?.maxFileSize }}).
+      </div>
+      <div v-else-if="file?.image" class="flex justify-center p-4">
+        <img :src="imageDataUrl" :alt="file.name" class="max-w-full rounded border border-[var(--border)]" />
       </div>
       <p v-else-if="file?.binary" class="p-4 text-[var(--text-dim)]">Binary file, {{ file.size }} bytes.</p>
       <div v-else-if="file?.lang === 'markdown'" class="markdown-body p-4" v-html="markdownHtml" />
