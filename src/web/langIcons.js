@@ -1,9 +1,10 @@
 /**
- * Color + label per highlight.js language id, used by FileIcon.vue. Colors
- * loosely follow the language associations developers already recognise
- * (GitHub's linguist palette) so the tree reads at a glance. `name` is not
- * rendered — it backs the icon's <title>/aria-label for hover and screen
- * readers, since color alone isn't an accessible distinguisher.
+ * Color + label per highlight.js language id — the fallback generic document
+ * glyph FileIcon.vue draws for anything without a dedicated icon below.
+ * Colors loosely follow the language associations developers already
+ * recognise (GitHub's linguist palette) so the tree reads at a glance.
+ * `name` is not rendered — it backs the icon's <title>/aria-label for hover
+ * and screen readers, since color alone isn't an accessible distinguisher.
  */
 const ICONS = {
   javascript: { name: 'JavaScript', color: '#d4b106' },
@@ -47,4 +48,37 @@ const DEFAULT_ICON = { name: 'Text', color: '#8d8a80' };
 
 export function iconFor(lang) {
   return ICONS[lang] ?? DEFAULT_ICON;
+}
+
+/**
+ * Filename → dedicated icon kind, for the common types FileIcon.vue draws a
+ * distinct glyph for (not just a tinted generic page). Checked by exact name
+ * first (CLAUDE.md, .gitignore — an extension-only match would miss these or
+ * mis-tag them), then by extension. Anything not listed here renders the
+ * generic colored document glyph from iconFor() above.
+ */
+const EXACT_NAME_KIND = {
+  'CLAUDE.md': 'agent',
+  '.gitignore': 'gitignore',
+};
+
+const EXT_KIND = {
+  js: 'js', mjs: 'js', cjs: 'js', jsx: 'js',
+  ts: 'ts', mts: 'ts', cts: 'ts', tsx: 'ts',
+  html: 'html', htm: 'html',
+  css: 'css',
+  json: 'json', jsonc: 'json',
+  md: 'markdown', markdown: 'markdown',
+  java: 'java',
+  kt: 'kotlin', kts: 'kotlin',
+  py: 'python', pyi: 'python',
+  vue: 'vue',
+  xml: 'xml', svg: 'xml',
+};
+
+export function iconKindFor(name) {
+  if (EXACT_NAME_KIND[name]) return EXACT_NAME_KIND[name];
+  const dot = name.lastIndexOf('.');
+  if (dot <= 0) return null;
+  return EXT_KIND[name.slice(dot + 1).toLowerCase()] ?? null;
 }

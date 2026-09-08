@@ -31,7 +31,7 @@ function node() {
             class="w-3 text-[10px] transition-transform"
             :class="{ 'rotate-90': expanded.has(childPath(dirPath, entry.name)) }"
           >▸</span>
-          <FolderIcon :open="expanded.has(childPath(dirPath, entry.name))" />
+          <FolderIcon :name="entry.name" :open="expanded.has(childPath(dirPath, entry.name))" />
           <span class="truncate">{{ entry.name }}</span>
         </button>
         <TreeLevel
@@ -58,7 +58,7 @@ function node() {
           v-if="active === childPath(dirPath, entry.name)"
           class="absolute left-0 top-0 h-full w-0.5 bg-[var(--color-accent)]"
         />
-        <FileIcon :lang="entry.lang" />
+        <FileIcon :name="entry.name" :lang="entry.lang" />
         <span class="truncate">{{ entry.name }}</span>
       </button>
     </li>

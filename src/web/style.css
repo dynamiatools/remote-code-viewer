@@ -1,59 +1,58 @@
 @import "tailwindcss";
 
 /*
- * Token system: a warm slate ground (not pure black/white) with one signature
- * accent — a phosphor amber pulled from old terminal displays, used sparingly
- * for the current branch, the active file, and diff hunk markers. Diff
- * add/remove get their own muted green/coral so they read at a glance without
- * competing with the accent.
+ * Token system: VS Code's own Dark+/Light+ palette, for the familiarity of a
+ * tool developers already read code in all day — the same blue accent, the
+ * same neutral grays, the same syntax colors. Diff add/remove reuse VS
+ * Code's git-decoration green/red rather than inventing new ones.
  */
 @theme {
-  --color-accent: #e0973a;
-  --color-accent-dim: #b4761f;
-  --color-add: #4fa98a;
-  --color-add-dim: #2f7a5f;
-  --color-del: #e1614c;
-  --color-del-dim: #b8402c;
+  --color-accent: #007acc;
+  --color-accent-dim: #005a9e;
+  --color-add: #81b88b;
+  --color-add-dim: #587c0c;
+  --color-del: #f14c4c;
+  --color-del-dim: #ad0707;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
 :root {
   color-scheme: light dark;
 
-  --bg: #faf9f6;
-  --surface: #ffffff;
-  --surface-dim: #f1efe9;
-  --border: #e3e0d6;
-  --text: #201e1a;
-  --text-dim: #6f6b60;
+  --bg: #ffffff;
+  --surface: #f3f3f3;
+  --surface-dim: #ececec;
+  --border: #e0e0e0;
+  --text: #1e1e1e;
+  --text-dim: #6e6e6e;
 
-  --hljs-fg: #3a382f;
-  --hljs-comment: #8a8574;
-  --hljs-keyword: #a3477a;
-  --hljs-string: #2f7a5f;
-  --hljs-number: #b4761f;
-  --hljs-function: #2e6bab;
-  --hljs-attr: #b4761f;
-  --hljs-tag: #a3477a;
+  --hljs-fg: #1e1e1e;
+  --hljs-comment: #008000;
+  --hljs-keyword: #0000ff;
+  --hljs-string: #a31515;
+  --hljs-number: #098658;
+  --hljs-function: #795e26;
+  --hljs-attr: #001080;
+  --hljs-tag: #800000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #15161a;
-    --surface: #1b1c21;
-    --surface-dim: #202127;
-    --border: #2b2c33;
-    --text: #e9e7e0;
-    --text-dim: #8d8a80;
+    --bg: #1e1e1e;
+    --surface: #252526;
+    --surface-dim: #2d2d2d;
+    --border: #3c3c3c;
+    --text: #d4d4d4;
+    --text-dim: #8a8a8a;
 
-    --hljs-fg: #dcdad2;
-    --hljs-comment: #74716a;
-    --hljs-keyword: #dd8ebd;
-    --hljs-string: #7cc9a4;
-    --hljs-number: #e0973a;
-    --hljs-function: #79aee8;
-    --hljs-attr: #e0973a;
-    --hljs-tag: #dd8ebd;
+    --hljs-fg: #d4d4d4;
+    --hljs-comment: #6a9955;
+    --hljs-keyword: #569cd6;
+    --hljs-string: #ce9178;
+    --hljs-number: #b5cea8;
+    --hljs-function: #dcdcaa;
+    --hljs-attr: #9cdcfe;
+    --hljs-tag: #569cd6;
   }
 }
 
