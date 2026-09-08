@@ -462,29 +462,32 @@ The viewer should assume that project directories contain sensitive information.
 
 ### Core
 
-* [ ] File tree
-* [ ] Syntax highlighting
-* [ ] Markdown rendering
-* [ ] Code finder
-* [ ] Code navigation
-* [ ] Git current branch
-* [ ] Git last commits
-* [ ] Git diff
-* [ ] Mobile-first interface
+* [x] File tree
+* [x] Syntax highlighting
+* [x] Markdown rendering
+* [x] Code finder
+* [x] Code navigation
+* [x] Git current branch
+* [x] Git last commits
+* [x] Git diff
+* [x] Mobile-first interface
 
 ### Remote Access
 
-* [ ] Automatic Cloudflare Tunnel
-* [ ] Configurable hostname
+* [x] Automatic Cloudflare Tunnel
+* [x] Configurable hostname
 * [ ] Cloudflare Access integration
-* [ ] Local-only mode
+* [x] Local-only mode
 
 ### Future
 
-* [ ] Image preview
+* [x] Image preview
 * [ ] Configurable ignored paths
 * [ ] Multiple workspace support
 * [ ] Project statistics
+
+For the versioned, in-progress roadmap (what ships next and why), see
+[docs/roadmap.md](./docs/roadmap.md).
 
 Features should be evaluated carefully to avoid turning the project into a full IDE.
 

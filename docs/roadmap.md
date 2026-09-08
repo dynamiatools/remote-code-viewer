@@ -11,15 +11,15 @@ useful.
 
 - [x] Architecture, design, security, API docs and ADRs
 - [x] `CLAUDE.md`
-- [ ] `workspace.mjs` filesystem boundary + boundary tests
-- [ ] `config.mjs`: argv, defaults, limits
-- [ ] Token auth, rate limit, hardening headers
-- [ ] `GET /api/{health,meta,tree,file,symbols,search}`
-- [ ] `GET /api/git/{branch,commits,status,diff}`
-- [ ] Read-only git wrapper with subcommand allowlist
-- [ ] Vue 3 SPA: tree, viewer + highlighting, outline, search, Markdown, git panel
-- [ ] Mobile-first shell (drawer / bottom sheet / hash router)
-- [ ] `--tunnel` via `cloudflared` with binary detection
+- [x] `workspace.mjs` filesystem boundary + boundary tests
+- [x] `config.mjs`: argv, defaults, limits
+- [x] Token auth, rate limit, hardening headers
+- [x] `GET /api/{health,meta,tree,file,symbols,search}`
+- [x] `GET /api/git/{branch,commits,status,diff}`
+- [x] Read-only git wrapper with subcommand allowlist
+- [x] Vue 3 SPA: tree, viewer + highlighting, outline, search, Markdown, git panel
+- [x] Mobile-first shell (drawer / bottom sheet / hash router)
+- [x] `--tunnel` via `cloudflared` with binary detection
 - [x] `npm publish` pipeline: build SPA on `prepublishOnly`, ship zero runtime deps
 
 **Done when:** on a clean remote box with only Node installed,
@@ -28,9 +28,10 @@ that opens a usable viewer on a phone.
 
 ## v0.2 — Sharper reading
 
-- [ ] `.gitignore`-aware tree, via batched `git check-ignore --stdin` with a
-      per-directory cache (removes most tree noise; the static hidden-dir list is a
-      stand-in)
+- [x] `.gitignore`-aware tree — shipped as a dim/italic visual cue via a batched
+      `git check-ignore -- <paths>` per listed directory (not `--stdin` + a cache,
+      the simpler form was enough); still shows the entries, doesn't filter them,
+      so the static hidden-dir list stays in place too
 - [ ] Virtualised code rendering, so a 50 000-line file scrolls on a phone
 - [ ] Soft-wrap toggle, font-size control, theme override — persisted
 - [ ] Deep links to a line (`#/file/src/x.js:120`) and line-range selection
@@ -47,8 +48,10 @@ that opens a usable viewer on a phone.
 
 ## v0.4 — Selective additions
 
-- [ ] Image preview (`png/jpg/gif/webp/svg`) via a hardened `/api/raw`, `svg`
-      served as `attachment` only
+- [x] Image preview (`png/jpg/gif/webp/bmp/ico/avif`) — shipped as base64 inside
+      the existing `/api/file` response, rendered via a `data:` URI (CSP already
+      allows it), so no new route was needed; `svg` stays text, shown highlighted
+      rather than rendered as an image
 - [ ] `.rcvignore` for per-project hide/deny rules
 - [ ] Multiple workspaces in one process (`--workspace name=path`)
 - [ ] Project stats: language breakdown, file count, repo size
