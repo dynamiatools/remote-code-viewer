@@ -1,6 +1,6 @@
 {
   "name": "@dynamia-tools/remote-code-viewer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ultra-light, mobile-first, read-only viewer for a remote codebase",
   "type": "module",
   "license": "MIT",
