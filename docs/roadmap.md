@@ -20,7 +20,7 @@ useful.
 - [ ] Vue 3 SPA: tree, viewer + highlighting, outline, search, Markdown, git panel
 - [ ] Mobile-first shell (drawer / bottom sheet / hash router)
 - [ ] `--tunnel` via `cloudflared` with binary detection
-- [ ] `npm publish` pipeline: build SPA on `prepublishOnly`, ship zero runtime deps
+- [x] `npm publish` pipeline: build SPA on `prepublishOnly`, ship zero runtime deps
 
 **Done when:** on a clean remote box with only Node installed,
 `cd ~/dev/x && npx @dynamia-tools/remote-code-viewer --tunnel` prints an HTTPS URL

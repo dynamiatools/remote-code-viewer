@@ -4,6 +4,9 @@
   "description": "Ultra-light, mobile-first, read-only viewer for a remote codebase",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=20.10"
   },
