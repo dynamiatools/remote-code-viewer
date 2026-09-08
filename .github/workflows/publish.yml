@@ -31,8 +31,9 @@ jobs:
       # immutable).
       - name: Verify release tag matches package.json version
         run: |
-          pkg_version="v$(node -p "require('./package.json').version")"
-          if [ "$pkg_version" != "$GITHUB_REF_NAME" ]; then
+          pkg_version="$(node -p "require('./package.json').version")"
+          tag_version="${GITHUB_REF_NAME#v}"
+          if [ "$pkg_version" != "$tag_version" ]; then
             echo "::error::release tag $GITHUB_REF_NAME does not match package.json version $pkg_version"
             exit 1
           fi
