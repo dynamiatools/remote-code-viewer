@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light dark;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tap-target {
+  @apply min-h-11 min-w-11;
+}
+
+.hljs {
+  @apply bg-transparent;
+}
+
+pre.code-block {
+  @apply text-[13px] leading-5 font-mono whitespace-pre;
+  tab-size: 2;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 dark:bg-neutral-700 rounded-full;
+}
